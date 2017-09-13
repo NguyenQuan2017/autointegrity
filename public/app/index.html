@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CarPart"   >
+   <head>
+      <meta charset="UTF-8">
+      <title>Document</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+   <div ng-controller="CarPartController">
+      <div class="col-md-6 ng-cloak"  ng-init="init()" ng-cloak>
+         <div class="col-md-12">
+            <label for="">Make</label>
+            <select  class="form-control make" ng-change="changeMake()" ng-model="make" >
+               <option ng-repeat="make in makes" value="{{make.VehicleMake}}" >{{make.VehicleMake}}</option>
+            </select>
+         </div>
+         <div class="col-md-12">
+            <label for="">Model</label>
+            <select  class="form-control" ng-change="ChangeModel()" ng-model="model" >
+               <option ng-repeat="model in models" value="{{model.VehicleModel}}">{{model.VehicleModel}}</option>
+            </select>
+         </div>
+         <div class="col-md-12">
+            <label for="">Badge</label>
+            <select  class="form-control" ng-model="badge" ng-change="ChangeBadge()">
+               <option value="{{badge.VehicleBadge}}" ng-repeat="badge in badges">{{badge.VehicleBadge}}</option>
+            </select>
+         </div>
+         <div class="col-md-12">
+            <label for="">Series</label>
+            <select class="form-control" ng-model="serie" ng-change="ChangeSeries()" >
+              
+               <option ng-repeat="serie in series" value="{{serie.VehicleSeries}}">{{serie.VehicleSeries}}</option>
+            </select>
+         </div>
+         <div class="col-md-12" style="float: right;margin-top: 20px">
+         	<button class="btn btn-default" ng-click="Show()">Show</button>
+         </div>
+         <table class="table">
+            <thead>
+               <tr>
+
+                  <th>Part Number</th>
+                  <th>Price</th>
+                  <th>Description</th>
+                  <th>Action</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="numberprice in numberprices">
+                  <td>{{numberprice.PartNumber}}</td>
+                  <td>{{numberprice.LowPrice}}</td>
+                  <td>{{numberprice.Description}}</td>
+                  <td><button  class="btn btn-default" ng-click="Edit(numberprice.ID)" >Edit</button></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+       <div  class="col-md-6"  ng-hide="hideform" >
+       <h3>Edit</h3>
+       <form action="">
+         
+            <div class="col-md-12">
+            <label for="">Part Number</label>
+               <input type="text" class="form-control" ng-model="pricenumber.PartNumber" >
+         </div>
+         <div class="col-md-12">
+            <label for="">Lower Price</label>
+            <input type="text" class="form-control" ng-model="pricenumber.LowPrice" >
+         </div>
+       </form>
+      </div>
+   </div>
+   <div id="loaderDiv"  loader>
+    <img src="images/giphy.gif"  class="ajax-loader "/>
+   </div>
+   </body>
+  
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+   <script src="js/app.js" ></script>
+   <script></script>
+</html>
