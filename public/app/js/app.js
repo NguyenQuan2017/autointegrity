@@ -8,7 +8,7 @@ app.controller('CarPartController',function ($scope,$http) {
 	$scope.series = "";	
 
 	$scope.init = function () {
-		$http.get('http://autointegrity.dev/make')
+		$http.get('/make')
 		.then(function(response) {
 			
 			$scope.makes = response.data.makes;
@@ -18,7 +18,7 @@ app.controller('CarPartController',function ($scope,$http) {
 	}
 	$scope.changeMake = function () {	
 
-		$http.get('http://autointegrity.dev/model?make=' + $scope.make)
+		$http.get('/model?make=' + $scope.make)
 		.then(function(response) {
 			$scope.models=response.data.models;
 			$scope.numberprices = response.data.numberprices;
@@ -27,7 +27,7 @@ app.controller('CarPartController',function ($scope,$http) {
 
 	$scope.ChangeModel = function () {
 
-		$http.get('http://autointegrity.dev/badge?make=' + $scope.make + '&model=' + $scope.model)
+		$http.get('/badge?make=' + $scope.make + '&model=' + $scope.model)
 			.then(function(response) {
 				$scope.badges=response.data.badges;
 			});
@@ -35,7 +35,7 @@ app.controller('CarPartController',function ($scope,$http) {
 
 	$scope.ChangeBadge = function () {
 		
-		$http.get('http://autointegrity.dev/series?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge)
+		$http.get('/series?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge)
 			.then(function(response){
 				$scope.series = response.data.series;
 			});
@@ -44,7 +44,7 @@ app.controller('CarPartController',function ($scope,$http) {
 
 	$scope.ChangeSeries = function() {
 		
-		$http.get('http://autointegrity.dev/index?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge + '&series=' + $scope.serie)
+		$http.get('/index?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge + '&series=' + $scope.serie)
 			.then(function(response){
 				$scope.numberprices = response.data.numberprices;
 				 // console.log(response.data);
@@ -67,7 +67,7 @@ app.controller('CarPartController',function ($scope,$http) {
 		
 		$scope.hideform = false;
 		console.log($scope.id);
-		$http.get('http://autointegrity.dev/edit/' + id)
+		$http.get('/edit/' + id)
 			.then(function(response){
 				
 				$scope.pricenumber = response.data.pricenumber;
