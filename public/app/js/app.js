@@ -27,40 +27,38 @@ app.controller('CarPartController',function ($scope,$http) {
 
 	$scope.ChangeModel = function () {
 
-		$http.get('/badge?make=' + $scope.make + '&model=' + $scope.model)
+		$http.get('/series?make=' + $scope.make + '&model=' + $scope.model)
 			.then(function(response) {
-				$scope.badges=response.data.badges;
+				$scope.series=response.data.series;
 			});
-	}
-
-	$scope.ChangeBadge = function () {
-		
-		$http.get('/series?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge)
-			.then(function(response){
-				$scope.series = response.data.series;
-			});
-		$scope.series = "";	
 	}
 
 	$scope.ChangeSeries = function() {
-		
-		$http.get('/index?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge + '&series=' + $scope.serie)
-			.then(function(response){
-				$scope.numberprices = response.data.numberprices;
-				 // console.log(response.data);
-			});
-
+		$http.get('/badge?make=' + $scope.make + '&model=' + $scope.model + '&series=' + $scope.serie)
+				.then(function(response){
+					$scope.badges = response.data.badges;
+				});
 	}
 
-	// $scope.Show = function () {
+	$scope.ChangeBadge = function () {
+		$http.get('/index?make=' + $scope.make + '&model=' + $scope.model + '&series=' + $scope.serie + '&badge=' + $scope.badge)
+		.then(function(response){
+			$scope.numberprices = response.data.numberprices;
+			// console.log(response.data);
+		});
 
-	// 	$http.get('http://localhost:8000/index?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge + '&series=' + $scope.serie)
-	// 		.then(function(response){
-	// 			$scope.numberprices = response.data.numberprices;
-	// 		});
-		
-	// }
+	}
+	$scope.Show = function () {
+		$scope.make = $scope.make ? $scope.make : '';
+		$scope.model = $scope.model ? $scope.model : '';
+		$scope.serie = $scope.serie ? $scope.serie : '';
+		$scope.badge = $scope.badge ? $scope.badge : '';
+		$http.get('/index?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge + '&series=' + $scope.serie)
+					.then(function(response){
+						$scope.numberprices = response.data.numberprices;
 
+					});
+	}
 	$scope.hideform = true;
 
 	$scope.Edit = function (id) {

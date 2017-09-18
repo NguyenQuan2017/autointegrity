@@ -26,16 +26,16 @@
             </select>
          </div>
          <div class="col-md-12">
-            <label for="">Badge</label>
-            <select  class="form-control" ng-model="badge" ng-change="ChangeBadge()">
-               <option value="{{badge.VehicleBadge}}" ng-repeat="badge in badges">{{badge.VehicleBadge}}</option>
+            <label for="">Series</label>
+            <select class="form-control" ng-model="serie" ng-change="ChangeSeries()" >
+
+               <option ng-repeat="serie in series" value="{{serie.VehicleSeries}}">{{serie.VehicleSeries}}</option>
             </select>
          </div>
          <div class="col-md-12">
-            <label for="">Series</label>
-            <select class="form-control" ng-model="serie" ng-change="ChangeSeries()" >
-              
-               <option ng-repeat="serie in series" value="{{serie.VehicleSeries}}">{{serie.VehicleSeries}}</option>
+            <label for="">Badge</label>
+            <select  class="form-control" ng-model="badge" ng-change="ChangeBadge()">
+               <option value="{{badge.VehicleBadge}}" ng-repeat="badge in badges">{{badge.VehicleBadge}}</option>
             </select>
          </div>
          <div class="col-md-12" style="float: right;margin-top: 20px">
@@ -44,36 +44,19 @@
          <table class="table">
             <thead>
                <tr>
-
+                  <th>Description</th>
                   <th>Part Number</th>
                   <th>Price</th>
-                  <th>Description</th>
-                  <th>Action</th>
                </tr>
             </thead>
             <tbody>
                <tr ng-repeat="numberprice in numberprices">
-                  <td>{{numberprice.PartNumber}}</td>
-                  <td>{{numberprice.LowPrice}}</td>
                   <td>{{numberprice.Description}}</td>
-                  <td><button  class="btn btn-default" ng-click="Edit(numberprice.ID)" >Edit</button></td>
+                  <td>{{numberprice.PartNumber}}</td>
+                  <td>{{numberprice.LowPrice | number: 2}}</td>
                </tr>
             </tbody>
          </table>
-      </div>
-       <div  class="col-md-6"  ng-hide="hideform" >
-       <h3>Edit</h3>
-       <form action="">
-         
-            <div class="col-md-12">
-            <label for="">Part Number</label>
-               <input type="text" class="form-control" ng-model="pricenumber.PartNumber" >
-         </div>
-         <div class="col-md-12">
-            <label for="">Lower Price</label>
-            <input type="text" class="form-control" ng-model="pricenumber.LowPrice" >
-         </div>
-       </form>
       </div>
    </div>
    <div id="loaderDiv"  loader>

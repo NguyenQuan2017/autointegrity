@@ -11,6 +11,7 @@ use App\Http\Requests;
 
 class CarPartController extends Controller
 {
+
     public function make(){
 
         $makes = CarPart::selectRaw('upper(VehicleMake) as VehicleMake ,count(VehicleMake) as countMake')
@@ -18,10 +19,13 @@ class CarPartController extends Controller
             ->orderBy('countMake','DESC')
             ->take(100)
             ->get();
-        return response(['makes' => $makes ]);
+        return response([
+            'status'=> 200,
+            'makes' => $makes,
+            'messages'=> 'Get data success'
+        ]);
 
     }
-
 
     public function model(Request $req){
         $make = $req->input('make');
@@ -34,15 +38,42 @@ class CarPartController extends Controller
             ->take(100)
             ->get();
 
-        return response(['models'=>$models]);
+        return response([
+            'status' => 200,
+            'models'=>$models,
+            'messages'=> 'Get data success'
+        ]);
     }
 
+    public function series(Request $req){
+        $make = $req->input('make');
+        $model = $req->input('model');
+//        $badge = $req->input('badge');
+        $series = CarPart::selectRaw('upper(VehicleSeries) as VehicleSeries ,count(VehicleSeries) as CountSerie')
+            ->where('VehicleMake',$make)
+            ->where('VehicleModel',$model)
+//            ->where('VehicleBadge',$badge)
+            ->where('VehicleSeries','<>',"")
+            ->where('VehicleSeries','<>',".")
+            ->groupBy('VehicleSeries')
+            ->orderBy('CountSerie','DESC')
+            ->skip(0)
+            ->take(100)
+            ->get();
+        return response([
+            'status'=> 200,
+            'series'=> $series,
+            'messages'=> 'Get data success'
+        ]);
+    }
     public function badge(Request $req) {
         $make = $req->input('make');
         $model = $req->input('model');
+        $serie = $req->input('series');
         $badge = CarPart::selectRaw('upper(VehicleBadge) as VehicleBadge ,count(VehicleBadge) as CountBadge')
             ->where('VehicleMake',$make)
             ->where('VehicleModel',$model)
+            ->where('VehicleSeries',$serie)
             ->where('VehicleBadge','<>',"")
             ->where('VehicleBadge','<>',".")
             ->groupBy('VehicleBadge')
@@ -51,62 +82,50 @@ class CarPartController extends Controller
             ->skip(0)
             ->take(100)
             ->get();
-        return response(['badges'=>$badge]);
-    }
-
-    public function series(Request $req){
-        $make = $req->input('make');
-        $model = $req->input('model');
-        $badge = $req->input('badge');
-        $series = CarPart::selectRaw('upper(VehicleSeries) as VehicleSeries ,count(VehicleSeries) as CountSerie')
-            ->where('VehicleMake',$make)
-            ->where('VehicleModel',$model)
-            ->where('VehicleBadge',$badge)
-            ->where('VehicleSeries','<>',"")
-            ->where('VehicleSeries','<>',".")
-            ->groupBy('VehicleSeries')
-            ->orderBy('CountSerie','DESC')
-            ->skip(0)
-            ->take(100)
-            ->get();
-        return response(['series'=>$series]);
+        return response([
+            'status'=> 200,
+            'badges'=> $badge,
+            'messages'=> 'Get data success'
+        ]);
     }
 
     public function NumberPrice(Request $req){
 
         $make = $req->input('make');
         $model = $req->input('model');
-        $badge = $req->input('badge');
         $series = $req->input('series');
+        $badge = $req->input('badge');
 
         $getId = CarPart::select('ID')
-            ->where('VehicleMake',$make)
-            ->where('VehicleModel', $model)
-            ->where('VehicleBadge', $badge)
-            ->where('VehicleSeries', $series)
+            ->where(function($query) use ($make, $model, $badge, $series) {
+                if ($make) {
+                    $query->where('VehicleMake', $make);
+                }
+                if ($model) {
+                    $query->where('VehicleModel', $model);
+                }
+                if ($series) {
+                    $query->where('VehicleSeries', $series);
+                }
+                if ($badge) {
+                    $query->where('VehicleBadge', $badge);
+                }
+            })
             ->skip(0)
             ->take(50)
             ->get()
             ->pluck('ID');
-        // return $getId;
-        //
-        $numberprices = Part::whereIn('aiCarPartId',$getId)
+        $numberprices = Part::whereIn('aiCarPartId', $getId)
             ->skip(0)
             ->take(50)
-            ->orderBy('LowPrice','DESC')
+            ->orderBy('Description','ASC')
             ->get();
         // ->toSql();
-        return response(['numberprices'=>$numberprices]);
+        return response([
+            'status'=> 200,
+            'numberprices'=> $numberprices,
+            'messages'=> 'Get data success'
+        ]);
     }
-
-    public function EditNumberPrice($id){
-
-        $pricenumber=Part::find($id);
-
-        return response(['pricenumber'=>$pricenumber]);
-    }
-
-
-
 
 }
