@@ -11,8 +11,9 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    </head>
    <body>
-   <div ng-controller="CarPartController">
-      <div class="col-md-6 ng-cloak"  ng-init="init()" ng-cloak>
+   <div ng-controller="CarPartController" id="CarPart">
+
+      <div class="col-md-8 panel panel-default" id="panel"  ng-init="init()" ng-cloak>
          <div class="col-md-12">
             <label for="">Make</label>
             <select  class="form-control make" ng-change="changeMake()" ng-model="make" >
@@ -28,35 +29,61 @@
          <div class="col-md-12">
             <label for="">Series</label>
             <select class="form-control" ng-model="serie" ng-change="ChangeSeries()" >
-
                <option ng-repeat="serie in series" value="{{serie.VehicleSeries}}">{{serie.VehicleSeries}}</option>
             </select>
          </div>
-         <div class="col-md-12">
+         <div class="col-md-12 ">
             <label for="">Badge</label>
             <select  class="form-control" ng-model="badge" ng-change="ChangeBadge()">
                <option value="{{badge.VehicleBadge}}" ng-repeat="badge in badges">{{badge.VehicleBadge}}</option>
             </select>
          </div>
-         <div class="col-md-12" style="float: right;margin-top: 20px">
-         	<button class="btn btn-default" ng-click="Show()">Show</button>
+         <div class="col-md-12 " style="margin-top: 20px">
+         	<button class="btn btn-default  col-md-offset-4 col-sm-offset-4 col-xs-offset-1 " ng-click="Show()" style="margin-bottom: 10px;width:200px">Show</button>
          </div>
-         <table class="table">
+      </div>
+      <div class="col-md-8 panel panel-default table-responsive">
+         <div class="col-md-12">
+            <div class="col-md-8 col-sm-6 ">
+               <input type="text" class="keyword" ng-model="Search"   placeholder="Search.."><button class="btn btn-info" ng-click = "search()">Search</button>
+               <hr>
+            </div>
+
+         </div>
+         <table class="table  col-md-8" id="table" >
             <thead>
-               <tr>
-                  <th>Description</th>
-                  <th>Part Number</th>
-                  <th>Price</th>
-               </tr>
+            <tr ng-hide="CarPartNumber" id="CarPartNumber">
+               <th>Description</th>
+               <th>Part Number</th>
+               <th>Price</th>
+            </tr>
+            <tr ng-hide="SearchPartNumber">
+               <th>VehicleMake</th>
+               <th>VehicleModel</th>
+               <th>VehicleSeries</th>
+               <th>VehicleBadge</th>
+               <th>Description</th>
+               <th>Part Number</th>
+               <th>Price</th>
+            </tr>
             </thead>
             <tbody>
-               <tr ng-repeat="numberprice in numberprices">
-                  <td>{{numberprice.Description}}</td>
-                  <td>{{numberprice.PartNumber}}</td>
-                  <td>{{numberprice.LowPrice | number: 2}}</td>
-               </tr>
+            <tr ng-hide="CarPartNumber" ng-repeat=" numberprice in numberprices">
+               <td>{{numberprice.Description}}</td>
+               <td>{{numberprice.PartNumber}}</td>
+               <td>{{numberprice.LowPrice | number: 2}}</td>
+            </tr>
+            <tr ng-hide="SearchPartNumber" ng-repeat=" keyword in keywords">
+               <td>{{keyword.VehicleMake}}</td>
+               <td>{{keyword.VehicleModel}}</td>
+               <td>{{keyword.VehicleSeries}}</td>
+               <td>{{keyword.VehicleBadge}}</td>
+               <td>{{keyword.Description}}</td>
+               <td>{{keyword.PartNumber}}</td>
+               <td>{{keyword.parts.LowPrice| number: 2}}</td>
             </tbody>
          </table>
+
       </div>
    </div>
    <div id="loaderDiv"  loader>

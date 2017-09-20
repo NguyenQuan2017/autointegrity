@@ -5,7 +5,10 @@ app.controller('CarPartController',function ($scope,$http) {
 	$scope.make = "";
 	$scope.model = "";
 	$scope.badge = "";
-	$scope.series = "";	
+	$scope.series = "";
+	$scope.keywords = "";
+	$scope.numberprices = "";
+	$scope.Search = "";
 
 	$scope.init = function () {
 		$http.get('/make')
@@ -14,7 +17,6 @@ app.controller('CarPartController',function ($scope,$http) {
 			$scope.makes = response.data.makes;
 		});
 
-		
 	}
 	$scope.changeMake = function () {	
 
@@ -23,6 +25,10 @@ app.controller('CarPartController',function ($scope,$http) {
 			$scope.models=response.data.models;
 			$scope.numberprices = response.data.numberprices;
 		});
+		$scope.Search = "";
+		$scope.SearchPartNumber = true;
+		$scope.CarPartNumber = false;
+
 	}
 
 	$scope.ChangeModel = function () {
@@ -31,6 +37,10 @@ app.controller('CarPartController',function ($scope,$http) {
 			.then(function(response) {
 				$scope.series=response.data.series;
 			});
+		$scope.Search = "";
+		$scope.numberprices = '';
+		$scope.SearchPartNumber = true;
+		$scope.CarPartNumber = false;
 	}
 
 	$scope.ChangeSeries = function() {
@@ -38,6 +48,10 @@ app.controller('CarPartController',function ($scope,$http) {
 				.then(function(response){
 					$scope.badges = response.data.badges;
 				});
+		$scope.Search = "";
+		$scope.numberprices = '';
+		$scope.SearchPartNumber = true;
+		$scope.CarPartNumber = false;
 	}
 
 	$scope.ChangeBadge = function () {
@@ -46,8 +60,12 @@ app.controller('CarPartController',function ($scope,$http) {
 			$scope.numberprices = response.data.numberprices;
 			// console.log(response.data);
 		});
-
+		$scope.Search = "";
+		$scope.numberprices = '';
+		$scope.SearchPartNumber = true;
+		$scope.CarPartNumber = false;
 	}
+	$scope.SearchPartNumber = true;
 	$scope.Show = function () {
 		$scope.make = $scope.make ? $scope.make : '';
 		$scope.model = $scope.model ? $scope.model : '';
@@ -56,22 +74,29 @@ app.controller('CarPartController',function ($scope,$http) {
 		$http.get('/index?make=' + $scope.make + '&model=' + $scope.model + '&badge=' + $scope.badge + '&series=' + $scope.serie)
 					.then(function(response){
 						$scope.numberprices = response.data.numberprices;
-
 					});
+		$scope.SearchPartNumber = true;
+		$scope.CarPartNumber = false;
+		$scope.Search = '';
 	}
-	$scope.hideform = true;
 
-	$scope.Edit = function (id) {
-		
-		$scope.hideform = false;
-		console.log($scope.id);
-		$http.get('/edit/' + id)
-			.then(function(response){
-				
-				$scope.pricenumber = response.data.pricenumber;
-
-			});		
+	$scope.search = function () {
+		if($scope.Search == "")
+		{
+			$scope.SearchPartNumber = false;
+			$scope.CarPartNumber = true;
+			$scope.keywords = "";
+		}
+		else {
+		$http.get('/search?search=' + $scope.Search)
+			.then(function(response) {
+				$scope.keywords = response.data.search;
+		});
+		$scope.CarPartNumber = true;
+		$scope.SearchPartNumber = false;
+		}
 	}
+
 });
 
 app.factory('httpInterceptor', function ($q, $rootScope, $log) {

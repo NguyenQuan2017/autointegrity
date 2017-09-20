@@ -21,3 +21,4 @@ Route::get('/badge',['as'=>'badge','uses'=>'CarPartController@badge']);
 Route::get('/series',['as'=>'series','uses'=>'CarPartController@series']);
 Route::get('/index',['as'=>'index','uses'=>'CarPartController@NumberPrice']);
 Route::get('/edit/{id}',['as'=>'edit','uses'=>'CarPartController@EditNumberPrice']);
+Route::get('/search',['as'=>'search','uses'=>'CarPartController@searchPartNumber']);

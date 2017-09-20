@@ -11,7 +11,7 @@ class CarPart extends Model
 
     public function parts(){
 
-        return $this->hasMany('App\Models\Part','aiCarPartId','ID');
+        return $this->hasOne('App\Models\Part','aiCarPartId','ID');
 
     }
 }

@@ -17,3 +17,37 @@
    margin-top: -32px; /* -1 * image height / 2 */
    display: block;
 }
+#CarPart {
+   margin:10px;
+}
+.keyword {
+   width: 200px;
+   box-sizing: border-box;
+   border: 2px solid #ccc;
+   border-radius: 4px;
+   font-size: 14px;
+   background-color: white;
+   background-position: 10px 10px;
+   background-repeat: no-repeat;
+   padding: 6px 11px 9px 22px;
+   -webkit-transition: width 0.4s ease-in-out;
+   transition: width 0.4s ease-in-out;
+   margin:10px;
+
+}
+
+.keyword:focus {
+   width: 50%;
+}
+hr {
+   width: 100%;
+}
+.table thead, th {
+   border:1px slategray inset ;
+}
+#CarPartNumber {
+   margin-bottom: 5px;
+}
+#table {
+   margin-bottom: 5px;
+}

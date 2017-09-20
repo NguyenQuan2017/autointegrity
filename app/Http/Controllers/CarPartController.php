@@ -116,15 +116,28 @@ class CarPartController extends Controller
             ->get()
             ->pluck('ID');
         $numberprices = Part::whereIn('aiCarPartId', $getId)
+//            ->where("partnumber","LIKE","%{$req->get('search')}%")
             ->skip(0)
             ->take(50)
             ->orderBy('Description','ASC')
             ->get();
-        // ->toSql();
+//        dd($numberprices);
         return response([
             'status'=> 200,
             'numberprices'=> $numberprices,
             'messages'=> 'Get data success'
+        ]);
+    }
+
+    public function searchPartNumber(Request $req) {
+        $search = CarPart::with('parts')
+            ->where("partnumber","LIKE","%{$req->get('search')}%")
+            ->get();
+
+         return response([
+            'status'=> 200,
+            'messages'=>'Get data success',
+            'search'=> $search
         ]);
     }
 
